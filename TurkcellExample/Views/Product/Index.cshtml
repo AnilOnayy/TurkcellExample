@@ -1,0 +1,44 @@
+﻿<h1>Product List</h1>
+
+
+<br />
+<a asp-action="add">Ürün Ekle</a>
+<br />
+
+
+@if(TempData["Message"]!= null)
+{
+   <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<br />
+
+
+<table class="table datatable">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Stock</td>
+            <td>İşlemler</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in ViewData["Products"] as List<Product>)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>@p.Stock</td>
+                <td>
+                    <a asp-action="delete" asp-route-id="@p.Id">Sil</a>
+                    <a asp-action="update" asp-route-id="@p.Id">Güncelle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul>
+</ul>
