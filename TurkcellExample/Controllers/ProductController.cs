@@ -55,7 +55,7 @@ namespace TurkcellExample.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] 
         public IActionResult Add(Product newProduct)
         {
             _context.Products.Add(newProduct);
