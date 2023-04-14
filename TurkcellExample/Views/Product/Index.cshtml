@@ -14,14 +14,18 @@
 <br />
 
 
-<table class="table datatable">
+<table class="table table-striped">
     <thead>
         <tr>
-            <td>Id</td>
-            <td>Name</td>
-            <td>Price</td>
-            <td>Stock</td>
-            <td>İşlemler</td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Color</th>
+            <th>IsPublish</th>
+            <th>Expire</th>
+            <th>Description</th>
+            <th>Operations</th>
         </tr>
     </thead>
     <tbody>
@@ -32,9 +36,13 @@
                 <td>@p.Name</td>
                 <td>@p.Price</td>
                 <td>@p.Stock</td>
+                <td>@p.Color</td>
+                <td>@p.IsPublish</td>
+                <td>@p.Expire</td>
+                <td>@(p.Description.Length > 20 ? p.Description.Substring(0,20)+"..." : p.Description) </td>
                 <td>
-                    <a asp-action="delete" asp-route-id="@p.Id">Sil</a>
-                    <a asp-action="update" asp-route-id="@p.Id">Güncelle</a>
+                    <a class="btn btn-warning" asp-action="update" asp-route-id="@p.Id">Güncelle</a>
+                    <a class="btn btn-danger" asp-action="delete" asp-route-id="@p.Id">Sil</a>
                 </td>
             </tr>
         }

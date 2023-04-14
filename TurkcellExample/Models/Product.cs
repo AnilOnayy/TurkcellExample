@@ -10,6 +10,10 @@
 
         public string? Color { get; set; }
 
-        public int Year { get; set; }
+        public bool IsPublish { get; set; }
+
+        public string Expire { get; set; }
+
+        public string Description { get; set; }
     }
 }

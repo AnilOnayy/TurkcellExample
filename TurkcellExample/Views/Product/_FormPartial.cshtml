@@ -1,0 +1,43 @@
+﻿@model Product
+
+<div class="mb-3">
+    <label asp-for="Name" class="form-label">Ürün Adı</label>
+    <input asp-for="Name" class="form-control" placeholder="Ürününüzün Adını Girin">
+</div>
+<div class="mb-3">
+    <label asp-for="Price" class="form-label">Ürün Fiyatı</label>
+    <input asp-for="Price" class="form-control" placeholder="Ürününüzün Fiyatını Girin">
+</div>
+<div class="mb-3">
+    <label asp-for="Stock" class="form-label">Ürün Stok</label>
+    <input asp-for="Stock" class="form-control" placeholder="Ürününüzün Stok Adedini Girin">
+</div>
+<div class="mb-3">
+    <label asp-for="Color" class="form-label">Ürün Rengi</label>
+    <input asp-for="Color" class="form-control" placeholder="Ürününüzün Rengini Girin">
+</div>
+
+
+<div class="form-check">
+    <input class="form-check-input" asp-for="IsPublish">
+    <label class="form-check-label" asp-for="IsPublish">
+        Yayınlansın mı ?
+    </label>
+</div>
+<div class="d-flex gap-3">
+    @foreach (var i in ViewBag.Expire as Dictionary<string,int>)
+    {
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="@(i.Value)-Exp" asp-for="Expire" value="@i.Key">
+            <label class="form-check-label" for="@(i.Value)-Exp" asp-for="Expire">
+                @i.Value
+            </label>
+        </div>
+
+    }
+</div>
+
+<div class="form-group my-3-2">
+    <label asp-for="Description">Example textarea</label>
+    <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+</div>

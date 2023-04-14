@@ -52,6 +52,13 @@ namespace TurkcellExample.Controllers
 
         public IActionResult Add()
         {
+            ViewBag.Expire = new Dictionary<string, int>()
+            {
+                {"1 Ay" ,1 },
+                {"3 Ay" ,3 },
+                {"6 Ay" ,6 },
+                {"12 Ay" ,12 },
+            };
             return View();
         }
 
@@ -67,6 +74,14 @@ namespace TurkcellExample.Controllers
 
         public IActionResult Update(int id)
         {
+            ViewBag.Expire = ViewBag.Expire = new Dictionary<string, int>()
+            {
+                {"1 Ay" ,1 },
+                {"3 Ay" ,3 },
+                {"6 Ay" ,6 },
+                {"12 Ay" ,12 },
+            };
+
             Product product = _context.Products.Find(id);
             return View(product);
         }
