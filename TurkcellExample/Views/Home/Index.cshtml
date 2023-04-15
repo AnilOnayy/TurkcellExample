@@ -10,7 +10,15 @@
 
     <div class="py-3">
 
-        @Html.Partial("~/PartialViews/_ProductListPartialView.cshtml", (ProductListPartialViewModel)ViewBag.Products)
+        <div class="row">
+            <div class="col-4">
+                 @Html.Partial("~/PartialViews/_ProductListPartialView.cshtml", (ProductListPartialViewModel)ViewBag.Products)
+            </div>
+            <div class="col-4">
+                 @await Component.InvokeAsync("ProductList")
+                 
+            </div>
+        </div>
 
     </div>
 </div>

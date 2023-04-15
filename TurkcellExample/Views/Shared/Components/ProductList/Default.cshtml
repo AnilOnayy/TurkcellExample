@@ -1,0 +1,28 @@
+﻿
+@using TurkcellExample.ViewModels
+@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<ProductListComponentViewModel>
+
+
+
+
+<table class="table table-dark table-striped">
+
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Açıklaması</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var p in @Model as List<ProductListComponentViewModel>)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Description</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
