@@ -1,22 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TurkcellExample.Helpers;
 using TurkcellExample.Models;
+using TurkcellExample.ViewModels;
+using TurkcellExample.Views.Product;
 
 namespace TurkcellExample.Controllers
 {
     public class ProductController : Controller
     {
         private AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductController(AppDbContext context)
+        public ProductController(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            ViewData["Products"] = _context.Products.ToList();
-            return View();
+            var products = _context.Products.ToList();
+
+            var converted = _mapper.Map<List<ProductViewModel>>(products);
+
+            return View(converted);
         }
 
         public IActionResult Delete(int id)
@@ -59,13 +68,47 @@ namespace TurkcellExample.Controllers
                 {"6 Ay" ,6 },
                 {"12 Ay" ,12 },
             };
+
+            ViewBag.ColorSelects = new SelectList(new List<ColorSelectList>()
+            {
+                new (){Data = "Kırmızı" , Value = "kirmizi"},
+                new (){Data = "Mavi" , Value = "mavi"},
+                new (){Data = "Yeşil" , Value = "yesil"},
+                new (){Data = "Turuncu" , Value = "turuncu"},
+                new (){Data = "Bej" , Value = "bej"},
+            }, "Value", "Data");
             return View();
         }
 
-        [HttpPost] 
-        public IActionResult Add(Product newProduct)
+        [HttpPost]
+        public IActionResult Add(ProductViewModel newProduct)
         {
-            _context.Products.Add(newProduct);
+            var product = _mapper.Map<Product>(newProduct);
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Expire = new Dictionary<string, int>()
+                {
+                    {"1 Ay" ,1 },
+                    {"3 Ay" ,3 },
+                    {"6 Ay" ,6 },
+                    {"12 Ay" ,12 },
+                };
+
+                ViewBag.ColorSelects = new SelectList(new List<ColorSelectList>()
+                {
+                    new (){Data = "Kırmızı" , Value = "kirmizi"},
+                    new (){Data = "Mavi" , Value = "mavi"},
+                    new (){Data = "Yeşil" , Value = "yesil"},
+                    new (){Data = "Turuncu" , Value = "turuncu"},
+                    new (){Data = "Bej" , Value = "bej"},
+
+                }, "Value", "Data");
+
+                return View(newProduct);
+            }
+
+            _context.Products.Add(product);
             _context.SaveChanges();
 
             TempData["Message"] = "Ürün başarıyla Eklendi";
@@ -74,7 +117,7 @@ namespace TurkcellExample.Controllers
 
         public IActionResult Update(int id)
         {
-            ViewBag.Expire = ViewBag.Expire = new Dictionary<string, int>()
+            ViewBag.Expire = new Dictionary<string, int>()
             {
                 {"1 Ay" ,1 },
                 {"3 Ay" ,3 },
@@ -82,18 +125,39 @@ namespace TurkcellExample.Controllers
                 {"12 Ay" ,12 },
             };
 
-            Product product = _context.Products.Find(id);
+            ViewBag.ColorSelects = new SelectList(new List<ColorSelectList>()
+            {
+                new (){Data = "Kırmızı" , Value = "kirmizi"},
+                new (){Data = "Mavi" , Value = "mavi"},
+                new (){Data = "Yeşil" , Value = "yesil"},
+                new (){Data = "Turuncu" , Value = "turuncu"},
+                new (){Data = "Bej" , Value = "bej"},
+            }, "Value", "Data");
+
+            var product = _mapper.Map<ProductViewModel>(_context.Products.Find(id));
             return View(product);
+
+
+
         }
+
         [HttpPost]
-        public IActionResult Update(Product product)
+        public IActionResult Update(ProductViewModel productVM)
         {
-            _context.Products.Update(product);
+            _context.Products.Update(_mapper.Map<Product>(productVM));
             _context.SaveChanges();
 
             TempData["Message"] = "Ürün başarıyla güncellendi";
             return RedirectToAction("Index");
         }
 
+
+        [AcceptVerbs("GET","POST")]
+        public IActionResult DuplicateNameControl(string Name,int Id=0)
+        {
+            var state = _context.Products.Any(p => p.Name.ToLower() == Name.ToLower() && p.Id != Id );
+
+            return state ? Json("Bu ürün adı ile bir ürün kayıtlı. Lütfen farklı bir ürün adı deneyin.") : Json(true);
+        }
     }
 }
