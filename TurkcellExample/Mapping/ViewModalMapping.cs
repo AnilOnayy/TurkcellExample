@@ -10,6 +10,7 @@ namespace TurkcellExample.Mapping
         {
 
             CreateMap<Product, ProductViewModel>().ReverseMap();
+            CreateMap<Product, ProductListModel>().ReverseMap();
             
         }
     }
