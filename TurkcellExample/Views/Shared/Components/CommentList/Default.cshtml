@@ -1,0 +1,30 @@
+﻿@using TurkcellExample.ViewModels
+@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<CommentListViewModel>
+
+
+<table class="table  table-striped">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ad</th>
+            <th>Yorum</th>
+            <th>Tarih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in @Model as List<CommentListViewModel>)
+        {
+
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Name</td>
+                <td>@c.Comment</td>
+                <td>@c.Date</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

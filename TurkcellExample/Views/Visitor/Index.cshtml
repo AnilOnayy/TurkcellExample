@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Comments";
+}
+@addTagHelper *, TurcellExample
+@model CommentListViewModel
+
+<h1>@ViewData["Title"]</h1>
+
+
+@if(TempData["Message"] != null)
+{
+    <div class="alert alert-success my-2">@TempData["Message"]</div>
+}
+
+
+<form method="POST" asp-action="Add" asp-controller="Visitor">
+
+    <div class="row">
+        <div class="mb-3 col-4">
+            <label asp-for="Name" class="form-label">Yorum Yapan</label>
+            <input asp-for="Name" class="form-control" placeholder="Jacob..">
+            <span class="text-danger " asp-validation-for="Name"></span>
+        </div>
+        <div class="mb-3 col-4">
+            <label asp-for="Comment" class="form-label">Yorum </label>
+            <input asp-for="Comment" class="form-control" placeholder="Bence Harika..">
+            <span class="text-danger " asp-validation-for="Comment"></span>
+        </div>
+        <div class="mb-3 col-4">
+            <label asp-for="Date" class="form-label">Yorum Tarihi</label>
+            <input asp-for="Date" class="form-control" placeholder="Jacob..">
+            <span class="text-danger " asp-validation-for="Date"></span>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Gönder</button>
+</form>
+
+<vc:comment-list></vc:comment-list>
+
+
+
+
+
+
+
+
