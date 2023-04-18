@@ -18,6 +18,7 @@ namespace TurkcellExample.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.TempProduct = _context.Products.FirstOrDefault();
             return View();
         }
         

@@ -18,5 +18,7 @@ namespace TurkcellExample.Models
         public string Description { get; set; }
         public DateTime? CreatedTime { get; set; }
 
+       
+
     }
 }

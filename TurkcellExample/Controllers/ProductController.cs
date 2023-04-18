@@ -61,6 +61,8 @@ namespace TurkcellExample.Controllers
 
         public IActionResult Add()
         {
+            
+
             ViewBag.Expire = new Dictionary<string, int>()
             {
                 {"1 Ay" ,1 },
@@ -77,7 +79,8 @@ namespace TurkcellExample.Controllers
                 new (){Data = "Turuncu" , Value = "turuncu"},
                 new (){Data = "Bej" , Value = "bej"},
             }, "Value", "Data");
-            return View();
+
+            return View(new ProductViewModel());
         }
 
         [HttpPost]
@@ -134,7 +137,7 @@ namespace TurkcellExample.Controllers
                 new (){Data = "Bej" , Value = "bej"},
             }, "Value", "Data");
 
-            var product = _mapper.Map<ProductViewModel>(_context.Products.Find(id));
+            ProductViewModel product = _mapper.Map<ProductViewModel>(_context.Products.Find(id));
             return View(product);
 
 
@@ -152,12 +155,48 @@ namespace TurkcellExample.Controllers
         }
 
 
-        [AcceptVerbs("GET","POST")]
-        public IActionResult DuplicateNameControl(string Name,int Id=0)
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult DuplicateNameControl(string Name, int Id = 0)
         {
-            var state = _context.Products.Any(p => p.Name.ToLower() == Name.ToLower() && p.Id != Id );
+            var state = _context.Products.Any(p => p.Name.ToLower() == Name.ToLower() && p.Id != Id);
 
             return state ? Json("Bu ürün adı ile bir ürün kayıtlı. Lütfen farklı bir ürün adı deneyin.") : Json(true);
+        }
+
+
+        public IActionResult GetById(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product != null)
+                return View(_mapper.Map<ProductViewModel>(product)); // Product Converted to ProductViewModel And Returning.
+            else
+                return View("Index", "Home");
+        }
+
+        public IActionResult Pages(int page, int pagesize=3)
+        {
+            int skip = (page - 1) * pagesize;
+
+            var products =
+                _context
+                .Products
+                .Skip(skip)
+                .Take(pagesize)
+                .Select(
+                     p => _mapper.Map<ProductViewModel>(p)
+                 )
+                .ToList();
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pagesize;
+
+
+            if (products.Count != 0)
+                return View(products);
+            else
+                return RedirectToAction("Index");
+
+            
         }
     }
 }

@@ -1,20 +1,9 @@
 ﻿
-<h1>Product List</h1>
-
-
-<br />
-<a asp-action="add">Ürün Ekle</a>
-<br />
+<h1> Page @ViewBag.Page  - Page Size @ViewBag.PageSize </h1>
 
 
 @model List<ProductViewModel>
 
-@if(TempData["Message"]!= null)
-{
-   <div class="alert alert-success my-3">@TempData["Message"]</div>
-}
-
-<br />
 
 
 <table class="table table-striped">
@@ -56,5 +45,10 @@
 </table>
 
 
-<a asp-action="pages" asp-controller="product" asp-route-page="1" asp-route-pagesize="3">1. Sayfa</a>
-<a asp-action="pages" asp-controller="product" asp-route-page="2" asp-route-pagesize="3">2. Sayfa</a>
+
+
+
+
+
+<ul>
+</ul>

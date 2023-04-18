@@ -21,16 +21,16 @@ namespace TurkcellExample.ViewModels
 
         public bool IsPublish { get; set; }
 
-        public string Expire { get; set; }
+        public string? Expire { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required(ErrorMessage = "Ürün Yayın Tarihi Boş Olamaz!")]
         public DateTime? CreatedTime { get; set; }
-        [Required(ErrorMessage ="E-Mail Alanı Doldurulması Zorunludur.")]
+
         [EmailAddress(ErrorMessage = "Geçersiz E-Mail Adresi.")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [RegularExpression("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[- \\s\\./0-9]*$", ErrorMessage = "Lütfen Telefon numarasını uygun formatta girin")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
     }
 }
