@@ -8,6 +8,7 @@ using TurkcellExample.Views.Product;
 
 namespace TurkcellExample.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ProductController : Controller
     {
         private AppDbContext _context;
@@ -163,7 +164,7 @@ namespace TurkcellExample.Controllers
             return state ? Json("Bu ürün adı ile bir ürün kayıtlı. Lütfen farklı bir ürün adı deneyin.") : Json(true);
         }
 
-
+        [Route("urun/{id}",Name ="ProductShow")]
         public IActionResult GetById(int id)
         {
             var product = _context.Products.Find(id);
@@ -173,6 +174,7 @@ namespace TurkcellExample.Controllers
                 return View("Index", "Home");
         }
 
+        [Route("[controller]/[action]/{page}/{pagesize}")]
         public IActionResult Pages(int page, int pagesize=3)
         {
             int skip = (page - 1) * pagesize;

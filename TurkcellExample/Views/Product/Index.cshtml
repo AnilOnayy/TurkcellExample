@@ -48,7 +48,7 @@
                 <td>
                     <a class="btn btn-warning" asp-action="update" asp-route-id="@p.Id">Güncelle</a>
                     <a class="btn btn-danger" asp-action="delete" asp-route-id="@p.Id">Sil</a>
-                    <a target="_blank"  asp-action="GetById" asp-controller="product" asp-route-id = "@p.Id">View</a>
+                    <a target="_blank"  asp-route="ProductShow" asp-route-id = "@p.Id">View</a>
                 </td>
             </tr>
         }

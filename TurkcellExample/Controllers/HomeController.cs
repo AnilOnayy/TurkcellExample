@@ -6,6 +6,7 @@ using TurkcellExample.ViewModels;
 
 namespace TurkcellExample.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,6 +20,9 @@ namespace TurkcellExample.Controllers
             _mapper = mapper;
         }
 
+        [Route("")]
+        [Route("home")]
+        [Route("home/index")]
         public IActionResult Index()
         {
             var TableProducts = _context.Products.Select(x => _mapper.Map<ProductListModel>(x)).ToList() ;
